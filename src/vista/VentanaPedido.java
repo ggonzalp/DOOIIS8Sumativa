@@ -93,6 +93,8 @@ public class VentanaPedido extends JFrame {
         botonEliminar.addActionListener(e -> eliminar());
     }
 
+
+
     //REGISTRO: Registra el ingreso de un pedido.
     private void registrarPedido() {
         try {
@@ -144,7 +146,8 @@ public class VentanaPedido extends JFrame {
             } else {
                 JOptionPane.showMessageDialog(
                         this,
-                        "El número de pedido ingresado ya existe.",
+                        "El número de pedido ingresado ya existe." +
+                                "No se pudo registrar en la base de datos",
                         "Registro fallido",
                         JOptionPane.ERROR_MESSAGE);
             }
@@ -206,21 +209,36 @@ public class VentanaPedido extends JFrame {
             }
 
             //recibe el id desde la tabla y el pedido nuevo desde el formulario.
-            String tipoPedido = comboTipoPedido.getActionCommand().trim();
+            int  idPedido= Integer.parseInt(tablaPedidos.getValueAt(fila, 0).toString());
+            String estado = tablaPedidos.getValueAt(fila, 8).toString();
+
             String descripcion = txtDescripcion.getText().trim();
-            int numero = Integer.parseInt(tablaPedidos.getValueAt(fila, 0).toString());
+            String textoNumero = txtNumero.getText().trim();
             String calle = txtCalle.getText().trim();
             String ciudad = txtCiudad.getText().trim();
-            int distancia = Integer.parseInt(tablaPedidos.getValueAt(fila, 0).toString());
-            String prioridad = comboPrioridad.getActionCommand().trim();
-            boolean validacion = checkValidacion.isSelected();
+            String textoDistancia = txtDistancia.getText().trim();
 
             //Valida campos obligatorios.
-            if (tipoPedido.isEmpty() || descripcion.isEmpty() || calle.isEmpty() || ciudad.isEmpty() || prioridad.isEmpty()) {
+            if (descripcion.isEmpty() || textoNumero.isEmpty() || calle.isEmpty() || ciudad.isEmpty() || textoDistancia.isEmpty()) {
                 throw new IllegalArgumentException("Todos los campos son obligatorios.");
             }
 
-            boolean editado = controlador.editarPedido(0, tipoPedido, descripcion, numero, calle, ciudad, distancia, prioridad, validacion);
+            //Convierte texto a número.
+            int numero = leerEntero(textoNumero,"Número dirección de entrega");
+            int distancia = leerEntero(textoDistancia, "Distancia en km");
+
+            if (numero <= 0) {
+                throw new IllegalArgumentException("El número de domicilio ingresado no es válido");
+            }
+
+            if (distancia <= 0) {
+                throw new IllegalArgumentException("La distancia ingresada no es válida.");
+            }
+            String tipoPedido = (String) comboTipoPedido.getSelectedItem();
+            String prioridad = (String) comboPrioridad.getSelectedItem();
+            boolean validacion = checkValidacion.isSelected();
+
+            boolean editado = controlador.editarPedido(idPedido, tipoPedido, descripcion, numero, calle, ciudad, distancia, validacion, prioridad, estado);
 
             if (editado) {
                 JOptionPane.showMessageDialog(

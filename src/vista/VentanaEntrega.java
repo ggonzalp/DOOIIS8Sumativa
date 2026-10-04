@@ -253,7 +253,7 @@ public class VentanaEntrega extends JFrame {
         int idPedido = Integer.parseInt(tablaEntregas.getValueAt(fila,0).toString());
 
         int opcion = JOptionPane.showConfirmDialog(this,
-                "¿Desea eliminar el pedido seleccionado?",
+                "¿Desea eliminar la entrega seleccionada?",
                 "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
 
         if (opcion == JOptionPane.YES_OPTION) {
