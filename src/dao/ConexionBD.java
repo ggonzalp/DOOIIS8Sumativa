@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
- * Clase ConexionBD que estblece conexión con MySQL y la base de datos.
+ * Clase ConexionBD que establece conexión con MySQL y la base de datos.
  */
 public class ConexionBD {
 

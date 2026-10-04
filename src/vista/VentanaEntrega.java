@@ -7,6 +7,8 @@ import modelo.Repartidor;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -44,6 +46,7 @@ public class VentanaEntrega extends JFrame {
         configurarVentana();
         configurarTabla();
         configurarBotones();
+        configurarRefrescoCombos();
 
         cargarCombos();
         actualizarTabla();
@@ -80,6 +83,10 @@ public class VentanaEntrega extends JFrame {
 
     //Carga los combos de pedidos y repartidores desde la base de datos.
     private void cargarCombos() {
+        //Recuerda los datos elegidos para después recargar.
+        int pedidoElegido = leerIdElegido(comboPedido);
+        int repartidorElegido = leerIdElegido(comboRepartidor);
+
         comboPedido.removeAllItems();
         comboPedido.addItem(new OpcionCombo(0, "Seleccione un pedido"));
         for (Pedido pedido : controlador.obtenerPedidos()) {
@@ -91,6 +98,29 @@ public class VentanaEntrega extends JFrame {
         for (Repartidor repartidor : controlador.obtenerRepartidores()) {
             comboRepartidor.addItem(new OpcionCombo(repartidor.getIdRepartidor(), repartidor.getIdRepartidor() + " - " + repartidor.getNombreRepartidor()));
         }
+
+        seleccionarPorId(comboPedido, pedidoElegido);
+        seleccionarPorId(comboRepartidor, repartidorElegido);
+    }
+
+    private void seleccionarPorId(JComboBox<OpcionCombo> combo, int id) {
+        for(int i = 0; i < combo.getItemCount(); i++) {
+            if(combo.getItemAt(i).getId() == id) {
+                combo.setSelectedIndex(i);
+                return;
+            }
+        }
+
+        combo.setSelectedIndex(0);
+    }
+
+    private void configurarRefrescoCombos() {
+        addWindowFocusListener(new WindowAdapter() {
+            @Override
+            public void windowGainedFocus(WindowEvent e) {
+                cargarCombos();
+            }
+        });
     }
 
     private int leerIdElegido(JComboBox<OpcionCombo> combo) {

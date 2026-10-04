@@ -28,7 +28,7 @@ public class Controlador {
      * Metodo que registra un repartidor nuevo.
      *
      * @param nombreRepartidor nombre del repartidor.
-     * @return
+     * @return true si se actualizó, false si no lo hizo.
      */
     public boolean registrarRepartidor(String nombreRepartidor) {
 
@@ -55,7 +55,7 @@ public class Controlador {
      *
      * @param id               número de identificación.
      * @param nombreRepartidor Nombre del repartidor.
-     * @return mensaje de confirmación.
+     * @return true si se actualizó, false si no lo hizo.
      */
     public boolean editarRepartidor(int id, String nombreRepartidor) {
         if (id <= 0 || nombreRepartidor == null || nombreRepartidor.isBlank()) {

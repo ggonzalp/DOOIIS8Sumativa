@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="vista.VentanaPrincipal">
-  <grid id="27dc6" binding="panelPrincipal" layout-manager="GridLayoutManager" row-count="7" column-count="17" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="panelPrincipal" layout-manager="GridLayoutManager" row-count="8" column-count="17" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="3" left="1" bottom="10" right="10"/>
     <constraints>
       <xy x="20" y="20" width="724" height="625"/>
@@ -21,28 +21,37 @@
       </component>
       <component id="fd661" class="javax.swing.JLabel">
         <constraints>
-          <grid row="2" column="4" row-span="5" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="1" column="4" row-span="7" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <text value=""/>
         </properties>
       </component>
+      <component id="c7c95" class="javax.swing.JButton" binding="btnGestionarRepartidor">
+        <constraints>
+          <grid row="1" column="5" row-span="2" col-span="6" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Impact" size="18"/>
+          <text value="Gestionar Repartidor"/>
+        </properties>
+      </component>
       <component id="aa748" class="javax.swing.JButton" binding="btnGestionarPedido">
         <constraints>
-          <grid row="1" column="5" row-span="1" col-span="6" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="3" column="5" row-span="1" col-span="6" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <font name="Impact" size="18"/>
           <text value="Gestionar Pedido"/>
         </properties>
       </component>
-      <component id="c7c95" class="javax.swing.JButton" binding="btnGestionarRepartidor">
+      <component id="a5f02" class="javax.swing.JButton" binding="btnGestionarEntrega">
         <constraints>
-          <grid row="2" column="5" row-span="2" col-span="6" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="4" column="5" row-span="1" col-span="6" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <font name="Impact" size="18"/>
-          <text value="Gestionar Repartidor"/>
+          <text value="Gestionar Entrega"/>
         </properties>
       </component>
       <component id="49250" class="javax.swing.JButton" binding="btnDespachar">
@@ -52,15 +61,6 @@
         <properties>
           <font name="Impact" size="18"/>
           <text value="Despachar"/>
-        </properties>
-      </component>
-      <component id="a5f02" class="javax.swing.JButton" binding="btnGestionarEntrega">
-        <constraints>
-          <grid row="6" column="5" row-span="1" col-span="6" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <font name="Impact" size="18"/>
-          <text value="Gestionar Entrega"/>
         </properties>
       </component>
     </children>

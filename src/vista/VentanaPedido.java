@@ -34,7 +34,8 @@ public class VentanaPedido extends JFrame {
     private JButton botonEditar;
     private JButton botonEliminar;
     private JTable tablaPedidos;
-    private JComboBox <String> comboFiltro;
+    private JComboBox <String> comboFiltroTipo;
+    private JComboBox <String> comboFiltroEstado;
 
     public VentanaPedido(Controlador controlador) {
         this.controlador = controlador;
@@ -52,7 +53,7 @@ public class VentanaPedido extends JFrame {
     //Configura la ventana donde se visualizará el formulario de registro.
     private void configurarVentana() {
         setTitle("SPEEDFAST - REGISTRO DE PEDIDOS");
-        setSize(900, 500);
+        setSize(1000, 600);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
@@ -80,13 +81,17 @@ public class VentanaPedido extends JFrame {
         comboPrioridad.setModel(new DefaultComboBoxModel<>(
                 new String[]{"ALTA", "MEDIA", "BAJA"}));
 
-        comboFiltro.setModel(new DefaultComboBoxModel<>(
+        comboFiltroTipo.setModel(new DefaultComboBoxModel<>(
                 new String[]{"Todos", "Pedido Express", "Pedido Comida", "Pedido Encomienda"}));
 
         comboEstado.setModel(new DefaultComboBoxModel<>(
                 new String[]{"PENDIENTE", "EN_REPARTO", "ENTREGADO"}));
 
-        comboFiltro.addActionListener(e -> actualizarTabla());
+        comboFiltroEstado.setModel(new DefaultComboBoxModel<>(
+                new String[]{"Todos", "PENDIENTE", "EN_REPARTO", "ENTREGADO"}));
+
+        comboFiltroTipo.addActionListener(e -> actualizarTabla());
+        comboFiltroEstado.addActionListener(e -> actualizarTabla());
     }
 
     //Conecta los botones visuales con el código que se ejecutará al hacer clic.
@@ -162,18 +167,19 @@ public class VentanaPedido extends JFrame {
         }
     }
 
-    //Vacía la tabla y la vuelve a llenar con los pedidos de la zondaDeCarga.
+    //Vacía la tabla y la vuelve a llenar con los pedidos de la zonaDeCarga.
     private void actualizarTabla() {
         tableModel.setRowCount(0);
 
-        String filtro = (String) comboFiltro.getSelectedItem();
-        String estado = (String) comboEstado.getSelectedItem();
+        String filtroTipo = (String) comboFiltroTipo.getSelectedItem();
+        String filtroEstado = (String) comboFiltroEstado.getSelectedItem();
 
         for (Pedido pedido : controlador.obtenerPedidos()) {
 
-            boolean mostrar = filtro.equals("Todos") || pedido.getTipoPedido().equals(filtro);
+            boolean cumpleTipo = filtroTipo.equals("Todos") || pedido.getTipoPedido().equals(filtroTipo);
+            boolean cumpleEstado = filtroEstado.equals("Todos") || pedido.getEstadoPedido().name().equals(filtroEstado);
 
-           if (mostrar) {
+           if (cumpleTipo && cumpleEstado) {
             Object[] fila = {
                     pedido.getIdPedido(),
                     pedido.getTipoPedido(),
@@ -215,7 +221,6 @@ public class VentanaPedido extends JFrame {
 
             //recibe el id desde la tabla y el pedido nuevo desde el formulario.
             int  idPedido= Integer.parseInt(tablaPedidos.getValueAt(fila, 0).toString());
-            String estado = tablaPedidos.getValueAt(fila, 8).toString();
 
             String descripcion = txtDescripcion.getText().trim();
             String textoNumero = txtNumero.getText().trim();
@@ -244,7 +249,7 @@ public class VentanaPedido extends JFrame {
             String estadoPedido = (String) comboEstado.getSelectedItem();
             boolean validacion = checkValidacion.isSelected();
 
-            boolean editado = controlador.editarPedido(idPedido, tipoPedido, descripcion, numero, calle, ciudad, distancia, validacion, prioridad, estado);
+            boolean editado = controlador.editarPedido(idPedido, tipoPedido, descripcion, numero, calle, ciudad, distancia, validacion, prioridad, estadoPedido);
 
             if (editado) {
                 JOptionPane.showMessageDialog(

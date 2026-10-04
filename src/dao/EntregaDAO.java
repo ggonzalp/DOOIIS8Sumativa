@@ -98,6 +98,12 @@ public class EntregaDAO {
         }
     }
 
+    /**
+     * Elimina la entrega de la tabla.
+     * @param idPedido Número de identificación de un pedido.
+     * @return true si eliminó la entrega de lo contrario, false.
+     */
+
     public boolean eliminarEntrega(int idPedido) {
         String sql = "DELETE FROM entrega WHERE idPedido = ?";
         try (Connection conexion = ConexionBD.conectar();
@@ -108,7 +114,7 @@ public class EntregaDAO {
             return ps.executeUpdate() > 0;
 
         } catch (SQLException e) {
-            System.out.println("Error al eliminar el pedido: " + e.getMessage());
+            System.out.println("Error al eliminar la entrega: " + e.getMessage());
             return false;
         }
     }

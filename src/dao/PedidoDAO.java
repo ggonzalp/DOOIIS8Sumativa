@@ -18,13 +18,13 @@ public class PedidoDAO {
     /**
      * Inserta un pedido en la base de datos.
      *
-     * @param pedido Pedido que se necista registrar.
+     * @param pedido Pedido que se necesita registrar.
      * @return True si la fila se insertó correctamente, de lo contrario devuelve false.
      */
 
     public boolean guardar(Pedido pedido) {
 
-        //El id de repartidor es generado por MySQL con AUTO_INCREMENT.
+        //El id del pedido es generado por MySQL con AUTO_INCREMENT.
         String sql =
                 "INSERT INTO pedido (tipoPedido, descripcion, direccionNumero, direccionCalle, direccionCiudad, distanciaKm, validacion, prioridadPedido, estadoPedido) " +
                         "VALUES (?,?,?,?,?,?,?,?,?)";
@@ -119,7 +119,7 @@ public class PedidoDAO {
      * Metodo actualizar estado
      *
      * @param pedido Corresponde a un pedido.
-     * @return El estado del pedido.
+     * @return true si se actualizó el pedido, false si no lo hizo.
      */
     public boolean actualizar(Pedido pedido) {
 
@@ -152,7 +152,7 @@ public class PedidoDAO {
      * Actualiza el estado de un pedido.
      * @param idPedido Número de identificación de un pedido.
      * @param estado Estado de entrega del pedido.
-     * @return Estado de entrega de un pedido.
+     * @return true si se actualizó el pedido, false si no lo hizo.
      */
     public boolean actualizarEstado(int idPedido, String estado) {
 
@@ -176,7 +176,7 @@ public class PedidoDAO {
      * Elimina un pedido de la tabla.
      *
      * @param idPedido Numero de identificación de un pedido.
-     * @return Mensaje confirmando la eliminación.
+     * @return true si cambió de estado, false si no lo hizo.
      */
     public boolean eliminar(int idPedido) {
         String sql = "DELETE FROM pedido WHERE idPedido = ?";

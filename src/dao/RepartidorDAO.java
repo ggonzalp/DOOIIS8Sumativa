@@ -69,7 +69,7 @@ public class RepartidorDAO {
 
     /**
      * Actualiza la lista de repartidores.
-     * @param repartidor Repartidor de pedidos.
+     * @param repartidor Repartidor con id existente.
      * @return Lista de repartidores actualizada.
      */
     public boolean actualizar(Repartidor repartidor) {
