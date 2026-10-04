@@ -195,8 +195,7 @@ public class VentanaRepartidor extends JFrame {
 
             JOptionPane.showMessageDialog(this, ok
                     ? "Repartidor eliminado correctamente"
-                    : "No fue posible eliminar el repartidor, tiene pedidos asignados." +
-                    "Revise que no tenga entregas asignadas.");
+                    : "No fue posible eliminar el repartidor. Revise que no tenga entregas asignadas.");
             if (ok) {
                 limpiar();
                 actualizarTabla();

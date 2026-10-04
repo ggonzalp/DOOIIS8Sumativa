@@ -40,29 +40,13 @@
           <text value="Eliminar"/>
         </properties>
       </component>
-      <component id="28a73" class="javax.swing.JTextField" binding="txtIdPedido">
-        <constraints>
-          <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="-1"/>
-          </grid>
-        </constraints>
-        <properties/>
-      </component>
       <component id="3719c" class="javax.swing.JLabel">
         <constraints>
           <grid row="1" column="4" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Id Repartidor:"/>
+          <text value="Repartidor:"/>
         </properties>
-      </component>
-      <component id="ceff5" class="javax.swing.JTextField" binding="txtIdRepartidor">
-        <constraints>
-          <grid row="1" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="-1"/>
-          </grid>
-        </constraints>
-        <properties/>
       </component>
       <component id="3d6da" class="javax.swing.JLabel">
         <constraints>
@@ -93,7 +77,7 @@
           <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Id Pedido:"/>
+          <text value="Pedido:"/>
         </properties>
       </component>
       <component id="e4323" class="javax.swing.JLabel">
@@ -101,7 +85,7 @@
           <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Fecha"/>
+          <text value="Fecha:"/>
         </properties>
       </component>
       <component id="de9c7" class="javax.swing.JButton" binding="botonEditar">
@@ -146,6 +130,18 @@
           <font name="Impact" size="18"/>
           <text value="Limpiar"/>
         </properties>
+      </component>
+      <component id="46992" class="javax.swing.JComboBox" binding="comboPedido">
+        <constraints>
+          <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="270e9" class="javax.swing.JComboBox" binding="comboRepartidor">
+        <constraints>
+          <grid row="1" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
       </component>
     </children>
   </grid>

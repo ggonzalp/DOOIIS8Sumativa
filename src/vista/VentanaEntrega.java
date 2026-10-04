@@ -2,6 +2,8 @@ package vista;
 
 import controlador.Controlador;
 import modelo.Entrega;
+import modelo.Pedido;
+import modelo.Repartidor;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -22,24 +24,17 @@ public class VentanaEntrega extends JFrame {
             DateTimeFormatter.ofPattern("HH:mm").withResolverStyle(ResolverStyle.STRICT);
 
 
-    private DefaultTableModel tableModel = new DefaultTableModel(
-            new Object[]{"Id Pedido", "Id Repartidor", "Fecha", "Hora"}, 0) {
-        @Override
-        public boolean isCellEditable(int row, int colum) {
-            return false;
-        }
-    };
-
+    private DefaultTableModel tableModel;
     private JPanel ventanaEntrega;
     private JTable tablaEntregas;
     private JButton botonGuardar;
     private JButton botonEditar;
     private JButton botonEliminar;
     private JButton botonLimpiar;
-    private JTextField txtIdPedido;
-    private JTextField txtIdRepartidor;
     private JTextField txtFecha;
     private JTextField txtHora;
+    private JComboBox <OpcionCombo> comboPedido;
+    private JComboBox <OpcionCombo> comboRepartidor;
 
     public VentanaEntrega(Controlador controlador) {
         this.controlador = controlador;
@@ -50,6 +45,7 @@ public class VentanaEntrega extends JFrame {
         configurarTabla();
         configurarBotones();
 
+        cargarCombos();
         actualizarTabla();
         limpiar();
     }
@@ -82,20 +78,43 @@ public class VentanaEntrega extends JFrame {
         botonLimpiar.addActionListener(e -> limpiar());
     }
 
+    //Carga los combos de pedidos y repartidores desde la base de datos.
+    private void cargarCombos() {
+        comboPedido.removeAllItems();
+        comboPedido.addItem(new OpcionCombo(0, "Seleccione un pedido"));
+        for (Pedido pedido : controlador.obtenerPedidos()) {
+            comboPedido.addItem(new OpcionCombo(pedido.getIdPedido(), pedido.getIdPedido() + " - " + pedido.getDescripcion()));
+        }
+
+        comboRepartidor.removeAllItems();
+        comboRepartidor.addItem(new OpcionCombo(0, "Seleccione un repartidor"));
+        for (Repartidor repartidor : controlador.obtenerRepartidores()) {
+            comboRepartidor.addItem(new OpcionCombo(repartidor.getIdRepartidor(), repartidor.getIdRepartidor() + " - " + repartidor.getNombreRepartidor()));
+        }
+    }
+
+    private int leerIdElegido(JComboBox<OpcionCombo> combo) {
+        OpcionCombo opcion = (OpcionCombo) combo.getSelectedItem();
+
+        if (opcion == null) {
+            return 0;
+        }
+
+        return opcion.getId();
+    }
+
     private void registrarEntrega() {
         try {
-            //Recibe información del formulario.
-            String textoIdPedido = txtIdPedido.getText().trim();
-            String textoIdRepartidor = txtIdRepartidor.getText().trim();
+            //Recibe los ids elegidos en los combos desde la base de datos.
+            int idPedido = leerIdElegido(comboPedido);
+            int idRepartidor = leerIdElegido(comboRepartidor);
 
-            //Valida campos obligatorios.
-            if (textoIdPedido.isEmpty() || textoIdRepartidor.isEmpty()) {
-                throw new IllegalArgumentException("Ingrese el id del pedido y el id del repartidor.");
+            //Valida que se haya elegido un pedido y un repartidor.
+            if (idPedido == 0 || idRepartidor == 0) {
+                throw new IllegalArgumentException("Seleccione un pedido y un repartidor.");
             }
 
-            //Convierte los textos a sus tipos.
-            int idPedido = leerEntero(textoIdPedido, "Id del pedido");
-            int idRepartidor = leerEntero(textoIdRepartidor, "Id del repartidor");
+            //Lee y valida fecha y hora.
             LocalDate fecha = leerFecha();
             LocalTime hora = leerHora();
 
@@ -140,13 +159,12 @@ public class VentanaEntrega extends JFrame {
 
 
             //Los nuevos datos los recibe desde el formulario.
-            String textoIdRepartidor = txtIdRepartidor.getText().trim();
+            int idRepartidor = leerIdElegido(comboRepartidor);
 
-            if (textoIdRepartidor.isEmpty()) {
-                throw new IllegalArgumentException("Ingrese Id del repartidor.");
+            if (idRepartidor == 0) {
+                throw new IllegalArgumentException("Seleccione Id del repartidor.");
             }
 
-            int idRepartidor = leerEntero(textoIdRepartidor, "Id del repartidor");
             LocalDate fecha = leerFecha();
             LocalTime hora = leerHora();
 
@@ -176,7 +194,7 @@ public class VentanaEntrega extends JFrame {
         }
     }
 
-    //ACTUALIZA el contenidod e la tabla.
+    //ACTUALIZA el contenido de la tabla.
     private void actualizarTabla() {
         tableModel.setRowCount(0);
 
@@ -194,21 +212,11 @@ public class VentanaEntrega extends JFrame {
 
     //Limpia los datos en el formulario.
     private void limpiar(){
-        txtIdPedido.setText("");
-        txtIdRepartidor.setText("");
+        comboPedido.setSelectedIndex(0);
+        comboRepartidor.setSelectedIndex(0);
         txtFecha.setText("");
         txtHora.setText("");
-
-    }
-
-    private int leerEntero(String texto, String nombreCampo) {
-        try {
-            return Integer.parseInt(texto);
-
-        } catch (NumberFormatException exception) {
-            throw new IllegalArgumentException(
-                    "El campo " + nombreCampo + "debe contener solo números enteros.");
-        }
+        tablaEntregas.clearSelection();
     }
 
     private LocalDate leerFecha(){

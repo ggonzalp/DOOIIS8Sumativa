@@ -146,8 +146,7 @@ public class VentanaPedido extends JFrame {
             } else {
                 JOptionPane.showMessageDialog(
                         this,
-                        "El número de pedido ingresado ya existe." +
-                                "No se pudo registrar en la base de datos",
+                        "No se pudo registrar en la base de datos",
                         "Registro fallido",
                         JOptionPane.ERROR_MESSAGE);
             }
