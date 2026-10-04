@@ -13,7 +13,7 @@ con operaciones CRUD que permitan gestionar repartidores, pedidos y entregas de 
 
 ## Ejecución
 
-1° Clonar el repositorio: https://github.com/ggonzalp/DOOIIS7Formativa.git
+1° Clonar el repositorio: https://github.com/ggonzalp/DOOIIS8Sumativa.git
 
 2° Abrir el proyecto en IntelliJ IDEA
 
