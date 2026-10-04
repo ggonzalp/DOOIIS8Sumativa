@@ -134,7 +134,7 @@ public class VentanaEntrega extends JFrame {
             } else {
                 JOptionPane.showMessageDialog(
                         this,
-                        "No se pudo registrar la entrega.",
+                        "No se pudo registrar la entrega. Revise datos ingresados.",
                         "Registro fallido",
                         JOptionPane.ERROR_MESSAGE);
             }

@@ -90,7 +90,7 @@ public class Controlador {
      * @param prioridadPedido  Define la prioridad del pedido.
      * @return true si el pedido se guardó correctamente, de lo contrario arroja un false.
      */
-    public boolean registrarPedido(String tipoPedido, String descripcion, DireccionEntrega direccionEntrega, int distanciaKm, boolean validacion, String prioridadPedido) {
+    public boolean registrarPedido(String tipoPedido, String descripcion, DireccionEntrega direccionEntrega, int distanciaKm, boolean validacion, String prioridadPedido, String estadoPedido) {
 
         if (tipoPedido.isBlank() || descripcion.isBlank() || prioridadPedido.isBlank()) {
             return false;
@@ -119,6 +119,13 @@ public class Controlador {
             default -> {
                 return false;
             }
+        }
+
+        //Permite elegir el estado de un pedido.
+        try {
+            pedido.cambiarEstado(EstadoPedido.valueOf(estadoPedido));
+        } catch (IllegalArgumentException | NullPointerException ex) {
+            return false;
         }
 
         return pedidoDAO.guardar(pedido);

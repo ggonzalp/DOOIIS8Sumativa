@@ -27,6 +27,7 @@ public class VentanaPedido extends JFrame {
     private JTextField txtDistancia;
     private JComboBox<String> comboTipoPedido;
     private JComboBox<String> comboPrioridad;
+    private JComboBox<String> comboEstado;
     private JButton botonGuardar;
     private JButton botonLimpiar;
     private JCheckBox checkValidacion;
@@ -82,6 +83,9 @@ public class VentanaPedido extends JFrame {
         comboFiltro.setModel(new DefaultComboBoxModel<>(
                 new String[]{"Todos", "Pedido Express", "Pedido Comida", "Pedido Encomienda"}));
 
+        comboEstado.setModel(new DefaultComboBoxModel<>(
+                new String[]{"PENDIENTE", "EN_REPARTO", "ENTREGADO"}));
+
         comboFiltro.addActionListener(e -> actualizarTabla());
     }
 
@@ -92,8 +96,6 @@ public class VentanaPedido extends JFrame {
         botonEditar.addActionListener(e -> editar());
         botonEliminar.addActionListener(e -> eliminar());
     }
-
-
 
     //REGISTRO: Registra el ingreso de un pedido.
     private void registrarPedido() {
@@ -126,12 +128,14 @@ public class VentanaPedido extends JFrame {
             DireccionEntrega direccionEntrega = new DireccionEntrega(numero, calle, ciudad);
 
             //Lee los combos
+
             String tipoElegido = (String) comboTipoPedido.getSelectedItem();
             String prioridad = (String) comboPrioridad.getSelectedItem();
+            String estadoPedido = (String) comboEstado.getSelectedItem();
             boolean validacion = checkValidacion.isSelected();
 
             //Lee el checkbox
-            boolean guardado = controlador.registrarPedido(tipoElegido, descripcion, direccionEntrega, distancia, validacion, prioridad);
+            boolean guardado = controlador.registrarPedido(tipoElegido, descripcion, direccionEntrega, distancia, validacion, prioridad, estadoPedido);
 
             if (guardado) {
                 JOptionPane.showMessageDialog(
@@ -163,6 +167,7 @@ public class VentanaPedido extends JFrame {
         tableModel.setRowCount(0);
 
         String filtro = (String) comboFiltro.getSelectedItem();
+        String estado = (String) comboEstado.getSelectedItem();
 
         for (Pedido pedido : controlador.obtenerPedidos()) {
 
@@ -194,6 +199,7 @@ public class VentanaPedido extends JFrame {
         txtCiudad.setText("");
         txtDistancia.setText("");
         comboPrioridad.setSelectedIndex(0);
+        comboEstado.setSelectedIndex(0);
         checkValidacion.setSelected(false);
     }
 
@@ -235,6 +241,7 @@ public class VentanaPedido extends JFrame {
             }
             String tipoPedido = (String) comboTipoPedido.getSelectedItem();
             String prioridad = (String) comboPrioridad.getSelectedItem();
+            String estadoPedido = (String) comboEstado.getSelectedItem();
             boolean validacion = checkValidacion.isSelected();
 
             boolean editado = controlador.editarPedido(idPedido, tipoPedido, descripcion, numero, calle, ciudad, distancia, validacion, prioridad, estado);
@@ -262,7 +269,6 @@ public class VentanaPedido extends JFrame {
                     "Datos no válidos", JOptionPane.WARNING_MESSAGE);
         }
     }
-
 
     private int leerEntero(String texto, String nombreCampo) {
         try {
